@@ -22,6 +22,14 @@ public:
 protected:
     
 private:
+    std::vector<std::map<std::string,int> > mapList;
+    std::vector<CCSprite*> mapSpriteList;
+    const char* boardImgName = "board.png";
+    const char* backGroundImgName = "bg.png";
+    
+    std::vector<std::map<std::string,int> > readMapFile();
+    void initMap(CCNode* parentNode);
+    void moveMap(float amount);
     
 };
 

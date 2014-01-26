@@ -250,6 +250,7 @@
 		FA3EBE451894DC6600911046 /* resources-small in Resources */ = {isa = PBXBuildFile; fileRef = FA3EBE421894DC6600911046 /* resources-small */; };
 		FA3EBE461894DC6600911046 /* resources-xlarge in Resources */ = {isa = PBXBuildFile; fileRef = FA3EBE431894DC6600911046 /* resources-xlarge */; };
 		FA3EBE4A1894DD6500911046 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA3EBE481894DD6500911046 /* GameScene.cpp */; };
+		FA3EBE4C1894EE3100911046 /* boardMap.json in Resources */ = {isa = PBXBuildFile; fileRef = FA3EBE4B1894EE3100911046 /* boardMap.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -750,6 +751,8 @@
 		FA3EBE471894DCF700911046 /* AppMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppMacro.h; path = ../Classes/AppMacro.h; sourceTree = "<group>"; };
 		FA3EBE481894DD6500911046 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScene.cpp; path = ../Classes/GameScene.cpp; sourceTree = "<group>"; };
 		FA3EBE491894DD6500911046 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = ../Classes/GameScene.h; sourceTree = "<group>"; };
+		FA3EBE4B1894EE3100911046 /* boardMap.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = boardMap.json; sourceTree = "<group>"; };
+		FA3EBE4D1894F07600911046 /* picojson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = picojson.h; path = ../Classes/picojson.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1268,6 +1271,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FA3EBE4D1894F07600911046 /* picojson.h */,
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
 				FA3EBE471894DCF700911046 /* AppMacro.h */,
@@ -1730,6 +1734,7 @@
 				D4EF949F15BD2D9800D803EB /* Icon-144.png */,
 				D4EF949915BD2D8B00D803EB /* Icon-57.png */,
 				D4EF949D15BD2D9600D803EB /* Icon-72.png */,
+				FA3EBE4B1894EE3100911046 /* boardMap.json */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -1822,6 +1827,7 @@
 				FA3EBE441894DC6600911046 /* resources-large in Resources */,
 				FA3EBE451894DC6600911046 /* resources-small in Resources */,
 				FA3EBE461894DC6600911046 /* resources-xlarge in Resources */,
+				FA3EBE4C1894EE3100911046 /* boardMap.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
