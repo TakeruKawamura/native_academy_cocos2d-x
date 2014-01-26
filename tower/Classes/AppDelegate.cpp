@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+#include "AppMacro.h"
+#include "GameScene.h"
 
 USING_NS_CC;
 
@@ -17,6 +18,35 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
     pDirector->setOpenGLView(pEGLView);
+    
+    // デザインサイズの設定
+    pEGLView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, kResolutionExactFit);
+    
+    CCSize frameSize = pEGLView->getFrameSize();
+    
+    std::vector<std::string> searchPath;
+    
+    if (frameSize.height > largeResource.size.height)
+    {
+        // 「L」ディレクトリのリソースを使用
+        searchPath.push_back(xlargeResource.directory);
+        pDirector->setContentScaleFactor(MIN(xlargeResource.size.height / designResolutionSize.height, xlargeResource.size.width / designResolutionSize.width));
+    }
+    else if (frameSize.height > smallResource.size.height)
+    {
+        // 「M」ディレクトリのリソースを使用
+        searchPath.push_back(largeResource.directory);
+        pDirector->setContentScaleFactor(MIN(largeResource.size.height / designResolutionSize.height, largeResource.size.width / designResolutionSize.width));
+    }
+    else
+    {
+        // 「S」ディレクトリのリソースを使用
+        searchPath.push_back(smallResource.directory);
+        pDirector->setContentScaleFactor(MIN(smallResource.size.height / designResolutionSize.height, smallResource.size.width / designResolutionSize.width));
+    }
+    
+    // リソースディレクトリを指定
+    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPath);
 	
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -25,7 +55,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pDirector->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    CCScene *pScene = HelloWorld::scene();
+    CCScene *pScene = GameScene::scene();
 
     // run
     pDirector->runWithScene(pScene);
