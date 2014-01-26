@@ -33,8 +33,7 @@ CharacterManager::~CharacterManager() {
     if (_ccSpriteBatchNode != NULL) {
         _ccSpriteBatchNode->removeAllChildrenWithCleanup(true);
         
-        // いるのか？
-        //_ccSpriteBatchNode->release();
+        _ccSpriteBatchNode->release();
         _ccSpriteBatchNode = NULL;
     }
 }
@@ -42,6 +41,8 @@ CharacterManager::~CharacterManager() {
 void CharacterManager::createCCSpriteBatchNode(const char* fileName) {
     if (fileName != NULL && _ccSpriteBatchNode == NULL) {
         _ccSpriteBatchNode = CCSpriteBatchNode::create(fileName);
+        
+        _ccSpriteBatchNode->retain();
     }
 }
 

@@ -30,8 +30,7 @@ CharacterBase::CharacterBase() {
 
 CharacterBase::~CharacterBase() {
     if (_ccSprite != NULL) {
-        // いるのか？
-        //_ccSprite->release();
+        _ccSprite->release();
         _ccSprite = NULL;
     }
     
@@ -53,8 +52,11 @@ void CharacterBase::createCCSprite(CCTexture2D* ccTexture2D,
         _texRectLeft  = new CCRect(ccRectLeft);
         
         // 始めは左向き
-        _ccSprite = CCSprite::createWithTexture(ccTexture2D, *(_texRectLeft));
         _directionLeft = true;
+        _ccSprite = CCSprite::createWithTexture(ccTexture2D, *(_texRectLeft));
+        
+        // 参照を増やす
+        _ccSprite->retain();
         
         // 下辺の中央がアンカーポイント
         _ccSprite->setAnchorPoint(ccp(0.0f, 0.5f));
@@ -129,6 +131,8 @@ void CharacterBase::update(float delta) {
     }
     
     _ccSprite->setPosition(ccp(_x, _y));
+    
+    CCLog("[%4.1f] : [%4.1f]", _x, _y);
 }
 
 void CharacterBase::updateOnFloor(float delta) {
