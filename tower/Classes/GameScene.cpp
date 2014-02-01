@@ -16,27 +16,40 @@ bool GameScene::init() {
     }
     
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    
     //マップファイルの読み込み
     this->mapList = this->readMapFile();
     
-    CCNode* bgNode = CCNode::create();
-    bgNode->setAnchorPoint(CCPoint(0.5f, 0.5f));
-    bgNode->setContentSize(ccp(winSize.width, winSize.height));
-    bgNode->setPosition(ccp(winSize.width * 0.5, winSize.height * 0.5));
-    this->addChild(bgNode);
+    parentNode1 = CCNode::create();
+    parentNode1->setContentSize(ccp(winSize.width, winSize.height * 2));
+    parentNode1->setPosition(ccp(winSize.width * 0.5, winSize.height));
+    this->addChild(parentNode1);
+    
+    parentNode2 = CCNode::create();
+    parentNode2->setContentSize(ccp(winSize.width, winSize.height * 2));
+    parentNode2->setPosition(ccp(winSize.width * 0.5, winSize.height * 3));
+
+    this->addChild(parentNode2);
     
     //set background
-    CCSprite* pBG1 = CCSprite::create(backGroundImgName);
-    pBG1->setPosition(ccp(winSize.width * 0.5, winSize.height * 0.5));
-    bgNode->addChild(pBG1);
-    
+    bg1 = CCSprite::create(backGroundImgName);
+    bg1->setPosition(CCPointZero);
+    parentNode1->addChild(bg1);
     
     //set second background
-    CCSprite* pBG2 = CCSprite::create(backGroundImgName);
-    pBG2->setPosition(ccp(1 + winSize.width * 0.5, 1 + winSize.height * 0.5));
-    bgNode->addChild(pBG2);
+    bg2 = CCSprite::create(backGroundImgName);
+    bg2->setPosition(CCPointZero);
+    parentNode2->addChild(bg2);
     
+    CCLOG("1 anchor point x %f", bg1->getAnchorPoint().x);
+    CCLOG("1 anchor point y %f", bg1->getAnchorPoint().y);
+    //初期の板の位置を指定
+    this->initMap();
     
+    //test data
+    testGameTime = 0;
+    
+    this->schedule(schedule_selector(GameScene::testScheduleMethod));
     
     return true;
 }
@@ -102,31 +115,83 @@ std::vector<std::map<std::string,int> > GameScene::readMapFile() {
     return resultList;
 }
 
-void GameScene::initMap(CCNode* parentNode) {
+void GameScene::initMap() {
     if (this->mapList.empty()) {
         CCLOG("No MapList Found");
         return;
     }
    
+    generateMap(parentNode1);
+    generateMap(parentNode2);
+}
+
+void GameScene::moveMap(float amount) {
+    
+    CCMoveBy* moveA = CCMoveBy::create(3, ccp(0, -amount));
+    CCMoveBy* moveB = CCMoveBy::create(3, ccp(0, -amount));
+    parentNode1->runAction(moveA);
+    parentNode2->runAction(moveB);
+ 
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    float prevY = 0;
-    float mP = 1.0f;
-    srand(time(NULL));
-    while (prevY < winSize.height * 2) {
-        CCSprite* board = CCSprite::create(boardImgName);
-        if (prevY == 0) {
-            prevY = winSize.height * 0.1;
-            board->setPosition(ccp(winSize.width * 0.5, winSize.height * 0.1));
-            parentNode->addChild(board);
-        } else {
-            std::map<std::string,int> location = this->mapList.at(rand() % this->mapList.size());
-            prevY += (float)location.at("y");
-            float xPos = (float) location.at("x");
-            board->setPosition(ccp(winSize * 0.5f + xPos * mP, prevY));
+    
+    //背景が完全に隠れた場合は、上に動かして新しい板を作る
+    if (parentNode1->getPositionY() <= -winSize.height || parentNode2->getPositionY() <= -winSize.height) {
+        CCLOG("new background created.");
+        
+        if (parentNode1->getPositionY() <= -winSize.height) {
+            parentNode1->setVisible(false);
+            parentNode1->setPosition(ccp(winSize.width * 0.5, winSize.height * 3));
+            generateMap(parentNode1);
+        } else if (parentNode2->getPositionY() <= -winSize.height) {
+            parentNode2->setVisible(false);
+            parentNode2->setPosition(ccp(winSize.width * 0.5, winSize.height * 3));
+            generateMap(parentNode2);
         }
-        this->mapSpriteList.push_back(board);
+    }
+}
+
+void GameScene::testScheduleMethod(float fDelta) {
+
+    testGameTime += fDelta;
+    int calcTime = (int) testGameTime;
+    bool movedFlg = false;
+    if (calcTime == lastValue) {
+        movedFlg = true;
+    }
+    if (calcTime % 5 == 0 && !movedFlg) {
+        lastValue = calcTime;
+        movedFlg = true;
+        this->moveMap(CCDirector::sharedDirector()->getWinSize().height / 2);
+    }
+}
+
+void GameScene::generateMap(CCNode* parentNode) {
+    //cleanup
+    parentNode->removeAllChildren();
+    CCSprite* bg = CCSprite::create(backGroundImgName);
+    bg->setPosition(CCPointZero);
+    parentNode->addChild(bg);
+    
+    CCPoint parentAP = parentNode->getAnchorPoint();
+    CCSize parentCS = parentNode->getContentSize();
+    
+    float prevY = parentCS.height * -0.5;
+    srand(time(NULL));
+    
+    while (prevY < parentCS.height) {
+        CCSprite* board = CCSprite::create(boardImgName);
+        float mPx = 15.0f;
+        float mPy = 7.0f;
+        
+        std::map<std::string,int> location = this->mapList.at(rand() % this->mapList.size());
+        prevY += (float)location.at("y") * mPy;
+        if (prevY > parentCS.height) {
+            break;
+        }
+        float xPos = (float) location.at("x") * mPx;
+        board->setPosition(ccp(parentCS.width * parentAP.x + xPos, parentCS.height * parentAP.y + prevY));
+        parentNode->addChild(board);
         
     }
-    
-    
+    parentNode->setVisible(true);
 }

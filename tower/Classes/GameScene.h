@@ -18,18 +18,29 @@ public:
     virtual bool init();
     static CCScene* scene();
     CREATE_FUNC(GameScene);
+    float testGameTime;
     
 protected:
     
 private:
     std::vector<std::map<std::string,int> > mapList;
-    std::vector<CCSprite*> mapSpriteList;
     const char* boardImgName = "board.png";
     const char* backGroundImgName = "bg.png";
+    CCNode* parentNode1;
+    CCNode* parentNode2;
+    CCSprite* bg1;
+    CCSprite* bg2;
+
+    int lastValue = 999;
     
     std::vector<std::map<std::string,int> > readMapFile();
-    void initMap(CCNode* parentNode);
+    void initMap();
     void moveMap(float amount);
+    
+    void testScheduleMethod(float fDelta);
+    
+    void generateMap(CCNode* parentNode);
+    
     
 };
 
