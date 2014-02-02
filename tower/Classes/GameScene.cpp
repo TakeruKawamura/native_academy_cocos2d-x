@@ -136,8 +136,8 @@ void GameScene::initMap() {
 
 void GameScene::moveMap(float amount) {
     
-    CCMoveBy* moveA = CCMoveBy::create(3, ccp(0, -amount));
-    CCMoveBy* moveB = CCMoveBy::create(3, ccp(0, -amount));
+    CCMoveBy* moveA = CCMoveBy::create(1, ccp(0, -amount));
+    CCMoveBy* moveB = CCMoveBy::create(1, ccp(0, -amount));
     parentNode1->runAction(moveA);
     parentNode2->runAction(moveB);
  

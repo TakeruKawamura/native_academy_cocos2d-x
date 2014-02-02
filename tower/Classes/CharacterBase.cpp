@@ -185,11 +185,14 @@ void CharacterBase::onJump() {
 }
 
 void CharacterBase::setOnFloor(CCSprite* ccSprite) {
-    _floor = ccSprite;
-    _rise = false;
-    _jump = false;
-    
-    checkBackGroundOffsetY();
+    // 一応ポインタ比較でチェック(変わった時点でセットしたい)
+    if (_floor != ccSprite) {
+        _floor = ccSprite;
+        _rise = false;
+        _jump = false;
+        
+        checkBackGroundOffsetY();
+    }
 }
 
 void CharacterBase::checkBackGroundOffsetY() {
