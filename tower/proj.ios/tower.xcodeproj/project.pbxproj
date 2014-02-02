@@ -257,6 +257,8 @@
 		FA7BD6BC189E06C8004725F9 /* LogoScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA7BD6B5189E06C8004725F9 /* LogoScene.cpp */; };
 		FA7BD6BD189E06C8004725F9 /* TitleLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA7BD6B7189E06C8004725F9 /* TitleLayer.cpp */; };
 		FA7BD6BE189E06C8004725F9 /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA7BD6BA189E06C8004725F9 /* TitleScene.cpp */; };
+		FA7BD6C1189E09CF004725F9 /* TitleLayer.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = FA7BD6C0189E09CF004725F9 /* TitleLayer.ccbi */; };
+		FA7BD6C3189E0A62004725F9 /* sound in Resources */ = {isa = PBXBuildFile; fileRef = FA7BD6C2189E0A62004725F9 /* sound */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -772,6 +774,8 @@
 		FA7BD6B9189E06C8004725F9 /* TitleLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TitleLayerLoader.h; path = ../Classes/TitleLayerLoader.h; sourceTree = "<group>"; };
 		FA7BD6BA189E06C8004725F9 /* TitleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TitleScene.cpp; path = ../Classes/TitleScene.cpp; sourceTree = "<group>"; };
 		FA7BD6BB189E06C8004725F9 /* TitleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TitleScene.h; path = ../Classes/TitleScene.h; sourceTree = "<group>"; };
+		FA7BD6C0189E09CF004725F9 /* TitleLayer.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = TitleLayer.ccbi; sourceTree = "<group>"; };
+		FA7BD6C2189E0A62004725F9 /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sound; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1753,6 +1757,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FA7BD6C2189E0A62004725F9 /* sound */,
+				FA7BD6C0189E09CF004725F9 /* TitleLayer.ccbi */,
 				FA3EBE411894DC6600911046 /* resources-large */,
 				FA3EBE421894DC6600911046 /* resources-small */,
 				FA3EBE431894DC6600911046 /* resources-xlarge */,
@@ -1860,6 +1866,8 @@
 				FA3EBE451894DC6600911046 /* resources-small in Resources */,
 				FA3EBE461894DC6600911046 /* resources-xlarge in Resources */,
 				FA3EBE4C1894EE3100911046 /* boardMap.json in Resources */,
+				FA7BD6C1189E09CF004725F9 /* TitleLayer.ccbi in Resources */,
+				FA7BD6C3189E0A62004725F9 /* sound in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
