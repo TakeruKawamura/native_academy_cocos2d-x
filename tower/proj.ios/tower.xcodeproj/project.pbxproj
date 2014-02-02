@@ -254,6 +254,9 @@
 		FA6ED372189DD05400DB022C /* CharacterBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA6ED36C189DD05400DB022C /* CharacterBase.cpp */; };
 		FA6ED373189DD05400DB022C /* CharacterManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA6ED36E189DD05400DB022C /* CharacterManager.cpp */; };
 		FA6ED374189DD05400DB022C /* CharacterPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA6ED370189DD05400DB022C /* CharacterPlayer.cpp */; };
+		FA7BD6BC189E06C8004725F9 /* LogoScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA7BD6B5189E06C8004725F9 /* LogoScene.cpp */; };
+		FA7BD6BD189E06C8004725F9 /* TitleLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA7BD6B7189E06C8004725F9 /* TitleLayer.cpp */; };
+		FA7BD6BE189E06C8004725F9 /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA7BD6BA189E06C8004725F9 /* TitleScene.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -762,6 +765,13 @@
 		FA6ED36F189DD05400DB022C /* CharacterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterManager.h; path = ../Classes/CharacterManager.h; sourceTree = "<group>"; };
 		FA6ED370189DD05400DB022C /* CharacterPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CharacterPlayer.cpp; path = ../Classes/CharacterPlayer.cpp; sourceTree = "<group>"; };
 		FA6ED371189DD05400DB022C /* CharacterPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterPlayer.h; path = ../Classes/CharacterPlayer.h; sourceTree = "<group>"; };
+		FA7BD6B5189E06C8004725F9 /* LogoScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LogoScene.cpp; path = ../Classes/LogoScene.cpp; sourceTree = "<group>"; };
+		FA7BD6B6189E06C8004725F9 /* LogoScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogoScene.h; path = ../Classes/LogoScene.h; sourceTree = "<group>"; };
+		FA7BD6B7189E06C8004725F9 /* TitleLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TitleLayer.cpp; path = ../Classes/TitleLayer.cpp; sourceTree = "<group>"; };
+		FA7BD6B8189E06C8004725F9 /* TitleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TitleLayer.h; path = ../Classes/TitleLayer.h; sourceTree = "<group>"; };
+		FA7BD6B9189E06C8004725F9 /* TitleLayerLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TitleLayerLoader.h; path = ../Classes/TitleLayerLoader.h; sourceTree = "<group>"; };
+		FA7BD6BA189E06C8004725F9 /* TitleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TitleScene.cpp; path = ../Classes/TitleScene.cpp; sourceTree = "<group>"; };
+		FA7BD6BB189E06C8004725F9 /* TitleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TitleScene.h; path = ../Classes/TitleScene.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1280,6 +1290,13 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FA7BD6B5189E06C8004725F9 /* LogoScene.cpp */,
+				FA7BD6B6189E06C8004725F9 /* LogoScene.h */,
+				FA7BD6B7189E06C8004725F9 /* TitleLayer.cpp */,
+				FA7BD6B8189E06C8004725F9 /* TitleLayer.h */,
+				FA7BD6B9189E06C8004725F9 /* TitleLayerLoader.h */,
+				FA7BD6BA189E06C8004725F9 /* TitleScene.cpp */,
+				FA7BD6BB189E06C8004725F9 /* TitleScene.h */,
 				FA6ED36C189DD05400DB022C /* CharacterBase.cpp */,
 				FA6ED36D189DD05400DB022C /* CharacterBase.h */,
 				FA6ED36E189DD05400DB022C /* CharacterManager.cpp */,
@@ -2068,6 +2085,9 @@
 				FA6ED372189DD05400DB022C /* CharacterBase.cpp in Sources */,
 				FA6ED373189DD05400DB022C /* CharacterManager.cpp in Sources */,
 				FA6ED374189DD05400DB022C /* CharacterPlayer.cpp in Sources */,
+				FA7BD6BC189E06C8004725F9 /* LogoScene.cpp in Sources */,
+				FA7BD6BD189E06C8004725F9 /* TitleLayer.cpp in Sources */,
+				FA7BD6BE189E06C8004725F9 /* TitleScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
