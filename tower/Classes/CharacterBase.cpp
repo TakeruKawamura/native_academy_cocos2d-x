@@ -8,6 +8,7 @@
 #include "GameScene.h"
 #include "CharacterManager.h"
 #include "CharacterBase.h"
+#include "GameResult.h"
 #include "math.h"
 #include "SimpleAudioEngine.h"
 
@@ -38,6 +39,7 @@ CharacterBase::CharacterBase() {
     _ground           = false;
     _jump             = false;
     _setJump          = false;
+    _firstOnFloor     = false;
 }
 
 CharacterBase::~CharacterBase() {
@@ -191,6 +193,8 @@ void CharacterBase::setOnFloor(CCSprite* ccSprite) {
         _rise = false;
         _jump = false;
         
+        if (!_firstOnFloor) _firstOnFloor = true;
+        
         checkBackGroundOffsetY();
     }
 }
@@ -228,6 +232,10 @@ void CharacterBase::checkGround() {
         if (_y - sprHalfH <= 0.0f) {
             _y = sprHalfH;
             if (!_ground) _ground = true;
+            
+            if (_firstOnFloor) {
+                setResultScene();
+            }
         }
     }
     else {
@@ -241,6 +249,12 @@ void CharacterBase::checkGround() {
             _fallDelta = 0.0f;
         }
     }
+}
+
+void CharacterBase::setResultScene() {
+    CCScene* result = GameResult::scene();
+    CCTransitionFade* tran = CCTransitionFade::create(2.0f, result, ccc3(0, 0, 0));
+    CCDirector::sharedDirector()->replaceScene(tran);
 }
 
 bool CharacterBase::calcFloor(float& leftX, float& rightX, float& y) {

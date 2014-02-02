@@ -66,6 +66,7 @@ private:
     void onJump();
     void checkGround();
     void checkBackGroundOffsetY();
+    void setResultScene();
     
     GameScene*          _scene;             // 参照のみ
     CharacterManager*   _manager;           // 参照のみ
@@ -92,6 +93,7 @@ private:
     bool                _rise;              // ジャンプ上昇中か
     bool                _jump;              // ジャンプ中か
     bool                _setJump;
+    bool                _firstOnFloor;
 };
 
 #endif // CHARACTER_BASE_H
