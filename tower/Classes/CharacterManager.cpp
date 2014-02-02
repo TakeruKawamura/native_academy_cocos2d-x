@@ -10,6 +10,7 @@
 
 CharacterManager::CharacterManager() {
     //_ccSpriteBatchNode = NULL;
+    _screenHeight = 0.0f;
 }
 
 
@@ -65,7 +66,11 @@ void CharacterManager::setSprite(CCLayer* ccLayer) {
             }
         }
     }
-
+    
+    // Initとかないのでここで処理(setSpriteは一回だけ呼ばれる前提なので)
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    
+    _screenHeight = visibleSize.height;
 }
 
 void CharacterManager::addCharacter(CharacterBase* pCB) {
@@ -119,10 +124,16 @@ void CharacterManager::update(const float delta) {
                 
                 // キャラのアップデート後に床に乗っていない、ジャンプ上昇中でなければコリジョン処理を行う
                 if (!cb->isFloor() && !cb->isRise()) {
-                    CCSprite* onFloor = NULL;
-                
-                    checkCollisionFoor(cb, &onFloor);
-                    cb->setOnFloor(onFloor); // NULLセットが床上にない判定
+                    // 追加 : 画面外なら処理しない
+                    float y = cb->getY();
+                    
+                    // スプライトに中心Yだけど気にしない
+                    if (y >= 0.0f && y <= _screenHeight) {
+                        CCSprite* onFloor = NULL;
+                        
+                        checkCollisionFoor(cb, &onFloor);
+                        cb->setOnFloor(onFloor); // NULLセットが床上にない判定
+                    }
                 }
             }
         }

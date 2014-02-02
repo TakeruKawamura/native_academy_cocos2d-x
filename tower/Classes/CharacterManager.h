@@ -36,6 +36,7 @@ private:
     //CCSpriteBatchNode*          _ccSpriteBatchNode;
     std::vector<CharacterBase*> _character;
     std::vector<CCSprite*>      _floor;
+    float                       _screenHeight;
 };
 
 
