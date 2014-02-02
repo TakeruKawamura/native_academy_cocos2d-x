@@ -10,6 +10,21 @@
 #include "picojson.h"
 #include <fstream>
 
+// For Character
+#include "CharacterManager.h"
+
+GameScene::GameScene() {
+    _characterManager = NULL;
+    _start = false;
+}
+
+GameScene::~GameScene() {
+    if (_characterManager != NULL) {
+        delete _characterManager;
+        _characterManager = NULL;
+    }
+}
+
 bool GameScene::init() {
     if (!CCLayer::init()) {
         return false;
@@ -50,6 +65,16 @@ bool GameScene::init() {
     testGameTime = 0;
     
     this->schedule(schedule_selector(GameScene::testScheduleMethod));
+    
+    // =====================================================================
+    // For Character
+    // 背景画像の両端の無効領域を算出
+    const float backgroundOffsetPixcel = bg1->getTexture()->getPixelsWide() * 29.0f / 384.0f;
+    
+    initCharacter(backgroundOffsetPixcel);
+    
+    // タッチを有効にする
+    this->setTouchEnabled(true);
     
     return true;
 }
@@ -194,4 +219,71 @@ void GameScene::generateMap(CCNode* parentNode) {
         
     }
     parentNode->setVisible(true);
+}
+
+// =====================================================================
+// For Character
+void GameScene::update(float dt) {
+    if (_characterManager != NULL) _characterManager->update(dt);
+}
+
+void GameScene::startGame() {
+    if (_characterManager != NULL) _characterManager->setVisible(true);
+    
+    scheduleUpdate();
+}
+
+bool GameScene::initCharacter(const float backgroundOffsetPixcel) {
+    if (_characterManager == NULL) _characterManager = new CharacterManager();
+    
+    if (_characterManager == NULL) return false;
+    
+    //_characterManager->createCCSpriteBatchNode(TEST_CHARA_PNG);
+    
+    CharacterBase* enemy0 = new CharacterBase();
+    
+    if (enemy0 == NULL) return false;
+    
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    
+    /*
+     CCSpriteBatchNode* spr = _characterManager->getCCSpriteBatchNode();
+     CCTexture2D*       tex = spr->getTexture();
+     
+     int pixW     = tex->getPixelsWide();
+     int pixH     = tex->getPixelsHigh();
+     int pixHalfW = (int)((float)pixW * 0.5f);
+     int pixHalfH = (int)((float)pixH * 0.5f);
+     
+     CCRect enemyR = CCRectMake(pixHalfW, pixHalfH, pixW,     pixH);
+     CCRect enemyL = CCRectMake(0,        0,        pixHalfW, pixHalfH);
+     
+     enemy0->createCCSprite(tex, enemyR, enemyL, backgroundOffsetPixcel);
+     */
+    enemy0->createCCSprite(TEST_CHARA_PNG, TEST_CHARA_PNG, backgroundOffsetPixcel);
+    enemy0->setPosition(visibleSize.width * 0.35f, visibleSize.height * 0.75f);
+    
+    _characterManager->addCharacter(enemy0);
+    
+    //this->addChild(spr);
+    _characterManager->setSprite(this);
+    
+    return true;
+}
+
+bool GameScene::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
+    if (_start) {
+        if (_characterManager != NULL) _characterManager->setJump();
+    }
+    else {
+        _start = true;
+        startGame();
+    }
+    
+    return true;
+}
+
+void GameScene::registerWithTouchDispatcher()
+{
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -127, true);
 }

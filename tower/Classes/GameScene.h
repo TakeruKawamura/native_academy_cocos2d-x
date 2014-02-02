@@ -13,12 +13,26 @@
 
 USING_NS_CC;
 
+class CharacterManager;
+
 class GameScene : public cocos2d::CCLayer {
 public:
+    GameScene();
+    virtual ~GameScene();
+    
     virtual bool init();
     static CCScene* scene();
     CREATE_FUNC(GameScene);
     float testGameTime;
+    
+    // =====================================================================
+    // For Character
+    void startGame();
+    void update(float dt);
+    
+    void registerWithTouchDispatcher();
+    bool ccTouchBegan( cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent );
+    // =====================================================================
     
 protected:
     
@@ -41,7 +55,14 @@ private:
     
     void generateMap(CCNode* parentNode);
     
+    // =====================================================================
+    // For Character
+    const char*             TEST_CHARA_PNG = "testChara.png";
+    bool initCharacter(const float backgroundOffsetPixcel);
     
+    CharacterManager*       _characterManager;
+    bool                    _start;
+    // =====================================================================
 };
 
 #endif /* defined(__GAME_SCENE__) */
