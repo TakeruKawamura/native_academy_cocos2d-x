@@ -228,7 +228,7 @@ void GameScene::update(float dt) {
 }
 
 void GameScene::startGame() {
-    if (_characterManager != NULL) _characterManager->setVisible(true);
+    //if (_characterManager != NULL) _characterManager->setVisible(true);
     
     scheduleUpdate();
 }
@@ -240,11 +240,11 @@ bool GameScene::initCharacter(const float backgroundOffsetPixcel) {
     
     //_characterManager->createCCSpriteBatchNode(TEST_CHARA_PNG);
     
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    
     CharacterBase* enemy0 = new CharacterBase();
     
     if (enemy0 == NULL) return false;
-    
-    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     
     /*
      CCSpriteBatchNode* spr = _characterManager->getCCSpriteBatchNode();
@@ -260,10 +260,29 @@ bool GameScene::initCharacter(const float backgroundOffsetPixcel) {
      
      enemy0->createCCSprite(tex, enemyR, enemyL, backgroundOffsetPixcel);
      */
-    enemy0->createCCSprite(TEST_CHARA_PNG, TEST_CHARA_PNG, backgroundOffsetPixcel);
-    enemy0->setPosition(visibleSize.width * 0.35f, visibleSize.height * 0.75f);
+    enemy0->createCCSprite(ENEMY_0_R_PNG, ENEMY_0_L_PNG, true, true, backgroundOffsetPixcel);
+    enemy0->setPosition(visibleSize.width * 0.9f, visibleSize.height * 1.5f);
     
     _characterManager->addCharacter(enemy0);
+    
+    CharacterBase* enemy1 = new CharacterBase();
+    
+    if (enemy1 == NULL) return false;
+    
+    enemy1->createCCSprite(ENEMY_1_R_PNG, ENEMY_1_L_PNG, true, false, backgroundOffsetPixcel);
+    enemy1->setPosition(visibleSize.width * 0.1f, visibleSize.height * 2.0f);
+    
+    _characterManager->addCharacter(enemy1);
+    
+    CharacterBase* player = new CharacterBase();
+    
+    if (player == NULL) return false;
+    
+    player->createCCSprite(PLAYER_R_PNG, PLAYER_L_PNG, true, false, backgroundOffsetPixcel);
+    player->setPosition(visibleSize.width * 0.5f, 0.0f);
+    player->setTurnFloor(true); // これがプレイヤーになる指定の仕様
+    
+    _characterManager->addCharacter(player);
     
     //this->addChild(spr);
     _characterManager->setSprite(this);

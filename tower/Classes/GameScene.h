@@ -57,7 +57,13 @@ private:
     
     // =====================================================================
     // For Character
-    const char*             TEST_CHARA_PNG = "testChara.png";
+    const char*             PLAYER_L_PNG  = "player_l.png";
+    const char*             PLAYER_R_PNG  = "player_r.png";
+    const char*             ENEMY_0_L_PNG = "enemy0_l.png";
+    const char*             ENEMY_0_R_PNG = "enemy0_r.png";
+    const char*             ENEMY_1_L_PNG = "enemy1_l.png";
+    const char*             ENEMY_1_R_PNG = "enemy1_r.png";
+    
     bool initCharacter(const float backgroundOffsetPixcel);
     
     CharacterManager*       _characterManager;

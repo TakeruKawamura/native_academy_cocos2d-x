@@ -23,10 +23,13 @@ CharacterBase::CharacterBase() {
     _fallDelta        = 0.0f;
     _screenWidthStart = 0.0f;
     _screenWidthEnd   = 0.0f;
+    _screenHeight     = 0.0f;
     _directionLeft    = false;
     _turnFloor        = false;
+    _ground           = false;
     _rise             = false;
     _jump             = false;
+    _setJump          = false;
 }
 
 CharacterBase::~CharacterBase() {
@@ -44,24 +47,53 @@ CharacterBase::~CharacterBase() {
 //void CharacterBase::createCCSprite(CCTexture2D* ccTexture2D,
 //                                   const CCRect& ccRectRight, const CCRect& ccRectLeft,
 void CharacterBase::createCCSprite(const char* fileNameR, const char* fileNameL,
-                                                        const float backgroundOffsetPixcel) {
+                                    const bool firstVisible, const bool dirLeft,
+                                            const float backgroundOffsetPixcel) {
     //if (_ccSpriteL == NULL && _ccSpriteR == NULL && ccTexture2D != NULL) {
     if (fileNameR != NULL && fileNameL != NULL) {
-        // 始めは左向き
-        _directionLeft = false;
+        //_ccSpriteR = CCSprite::createWithTexture(ccTexture2D, ccRectRight);
+        _ccSpriteR = CCSprite::create(fileNameR);
+        _ccSpriteR->retain();
         
         //_ccSpriteL = CCSprite::createWithTexture(ccTexture2D, ccRectLeft);
         _ccSpriteL = CCSprite::create(fileNameL);
         _ccSpriteL->retain();
         
-        // 始めは表示しない
-        _ccSpriteL->setVisible(false);
+        _directionLeft = dirLeft;
         
-        //_ccSpriteR = CCSprite::createWithTexture(ccTexture2D, ccRectRight);
-        _ccSpriteR = CCSprite::create(fileNameR);
-        _ccSpriteR->retain();
         
-        _ccSpriteR->setVisible(false);
+        _vy = -WIDTH_MOVEMENT;
+        
+        bool visibleR = false;
+        bool visibleL = false;
+        
+        if (firstVisible) {
+            if (_directionLeft) {
+                visibleL = true;
+            }
+            else {
+                visibleR = true;
+            }
+        }
+        
+        _ccSpriteR->setVisible(visibleR);
+        _ccSpriteL->setVisible(visibleL);
+        
+        // 最初の落下用
+        float degree = 0.0f;
+        
+        if (_directionLeft) {
+            degree   = 240.0f;
+            
+        }
+        else {
+            degree   = -60.0f;
+        }
+        
+        float theta = degree * M_PI / DEGREE_180;
+        
+        _vx = WIDTH_MOVEMENT * cosf(theta);
+        _vy = WIDTH_MOVEMENT * sinf(theta);
         
         // 途中画面サイズ変更は想定しない
         CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
@@ -69,8 +101,7 @@ void CharacterBase::createCCSprite(const char* fileNameR, const char* fileNameL,
         _screenWidthStart = backgroundOffsetPixcel;
         _screenWidthEnd   = visibleSize.width - backgroundOffsetPixcel;
         
-        _vx = 0.0f;
-        _vy = -WIDTH_MOVEMENT;
+        _screenHeight = visibleSize.height;
     }
 }
 
@@ -103,27 +134,62 @@ void CharacterBase::update(const float delta) {
     // 更新不要
     if (_ccSpriteR == NULL || _ccSpriteL == NULL) return;
     
+    if (_setJump) {
+        _setJump = false;
+        doJump();
+    }
+    
     // 床のスプライトがないなら床上にいない仕様とする
-    if (_floor == NULL) {
+    if (_floor == NULL && !_ground) {
         updateFalling(delta);
     }
     else {
         updateOnFloor(delta);
     }
     
-    CCSprite* target = getCCSprite();
+    // ジャンプ中処理
+    onJump();
+    
+    // 画面下端処理
+    checkGround();
     
     // 一つ前のY座標を保存(落下する前提なのでコリジョン用)
+    CCSprite* target = getCCSprite();
+    
     _oldy = target->boundingBox().origin.y;
-    
     target->setPosition(ccp(_x, _y));
-    
-    // ジャンプ中
+}
+
+void CharacterBase::onJump() {
     if (_jump && _rise) {
-        float y = target->boundingBox().origin.y;
+        float y = getCCSprite()->boundingBox().origin.y;
         
-        if (y < _oldy) {
+        if (y <= _oldy) {
             _rise = false;
+        }
+    }
+}
+
+void CharacterBase::checkGround() {
+    CCSprite* target = getCCSprite();
+    CCRect    rect   = target->boundingBox();
+    
+    // _yはアンカーなのでスプライト中心なのに留意
+    if (_turnFloor) {
+        // プレイヤーなら地面を歩けるようにする
+        const float sprHalfH = rect.size.height * 0.5f;
+        
+        if (_y - sprHalfH <= 0.0f) {
+            _y = sprHalfH;
+            if (!_ground) _ground = true;
+        }
+    }
+    else {
+        // プレイヤーでなければ画面上部に戻す
+        const float sprH = rect.size.height;
+        
+        if (_y < -sprH) {
+            _y = _screenHeight + sprH;
         }
     }
 }
@@ -167,11 +233,11 @@ void CharacterBase::updateOnFloor(const float delta) {
     float movedX = rect.origin.x + movement;
     
     // BGの両端を考慮する
-    if (movedX < _screenWidthStart) {
+    if (movedX <= _screenWidthStart) {
         setDirectionLeft(false);
         _x = _screenWidthStart + sprHalfW + REVERSE_OFFSET;
     }
-    else if (movedX > _screenWidthEnd) {
+    else if (movedX >= _screenWidthEnd) {
         setDirectionLeft(true);
         _x = _screenWidthEnd - sprHalfW - REVERSE_OFFSET;
     }
@@ -179,9 +245,16 @@ void CharacterBase::updateOnFloor(const float delta) {
         // 移動後の描画X座標
         movedX += sprHalfW;
         
+        // プレイヤーで地面にいるなら処理抜ける
+        if (_turnFloor && _ground) {
+            _x = movedX;
+            return;
+        }
+        
         // 床上チェック
         float left, right, y;
         
+        // _x, _yはスプライト中心(アンカー？)、CCRextは左下基準で幅高さなのに留意
         if (calcFloor(left, right, y)) {
             // 高さはセットしてしまう
             // 当たり判定はRect.originで行っているので、描画座標はキャラ高の半分を足す
@@ -221,7 +294,7 @@ void CharacterBase::updateOnFloor(const float delta) {
         }
     }
     
-    if (_floor == NULL) {
+    if (_floor == NULL && !_ground) {
         // 落下時間初期化
         _fallDelta = 0.0f;
         
@@ -242,8 +315,8 @@ void CharacterBase::updateOnFloor(const float delta) {
         
         float theta = degree * M_PI / DEGREE_180;
         
-        _vx = movement * cosf(theta);
-        _vy = movement * sinf(theta);
+        _vx = WIDTH_MOVEMENT * cosf(theta);
+        _vy = WIDTH_MOVEMENT * sinf(theta);
     }
 }
 
@@ -253,16 +326,32 @@ void CharacterBase::updateFalling(const float delta) {
     
     _fallDelta += deltaCoeffi;
     
+    // 物理計算結果をピクセル単位に調整する
+    // * ADJUST_FACTOR_FOR_PHYSIC;
+    
     // P = P0 + V0*time + 1/2*G*Time^2
-    _x = _x0 + (_vx * _fallDelta);
-    _y = _y0 + (_vy * _fallDelta) + (0.5f * GRAVITY_COEFFI * _fallDelta * _fallDelta * ADJUST_FACTOR_FOR_PHYSIC);
+    _x = _x0 + _vx * _fallDelta;
+    _y = _y0 + (_vy * _fallDelta) + ((0.5f * GRAVITY_COEFFI * _fallDelta * _fallDelta) * ADJUST_FACTOR_FOR_PHYSIC);
+    
+    // 画面端処理
+    if (_x <= _screenWidthStart) {
+        setDirectionLeft(false);
+        _x0 = _screenWidthStart - _x0;
+        _vx = -_vx;
+    }
+    else if (_x >= _screenWidthEnd) {
+        setDirectionLeft(true);
+        _x0 = _screenWidthEnd + (_screenWidthEnd - _x0);
+        _vx = -_vx;
+    }
 }
 
-void CharacterBase::setJump() {
-    if (_floor != NULL) {
+void CharacterBase::doJump() {
+    if (_floor != NULL || _ground) {
         _floor = NULL;
         _jump = true;
         _rise = true;
+        _ground = false;
         
         // 落下時間初期化
         _fallDelta = 0.0f;
@@ -272,23 +361,20 @@ void CharacterBase::setJump() {
         _y0 = _y;
         
         // 初速をセット
-        float movement = 0.0f;
         float degree = 0.0f;
         
         if (_directionLeft) {
-            movement = -WIDTH_MOVEMENT;
             degree   = 120.0f;
             
         }
         else {
-            movement = WIDTH_MOVEMENT;
             degree   = 60.0f;
         }
         
         float theta = degree * M_PI / DEGREE_180;
         
-        _vx = movement * cosf(theta);
-        _vy = movement * sinf(theta);
+        _vx = JUMP_VELOCITY * cosf(theta);
+        _vy = JUMP_VELOCITY * sinf(theta);
     }
 }
 
