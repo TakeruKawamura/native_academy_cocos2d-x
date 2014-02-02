@@ -20,12 +20,22 @@ USING_NS_CC_EXT;
  */
 class GameResult : public CCLayer
 , public CCBSelectorResolver
+, public CCBMemberVariableAssigner
 {
+    CCSprite* gameover;
+    
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(CCObject* pTarget, const char* pSelectorName);
     virtual SEL_CCControlHandler onResolveCCBCCControlSelector(CCObject* pTarget, const char* pSelectorName);
+    virtual bool onAssignCCBMemberVariable(CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode);
+    
     virtual bool init();
-
+    
+    virtual void update(float delta);
+    
 public:
+    GameResult();
+    virtual ~GameResult();
+    
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(GameResult, create);
 };
 
