@@ -246,6 +246,7 @@
 		D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949B15BD2D8E00D803EB /* Icon-114.png */; };
 		D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949D15BD2D9600D803EB /* Icon-72.png */; };
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
+		FA168294189E280100BE614E /* GameResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA168291189E280100BE614E /* GameResult.cpp */; };
 		FA261744189E1F48000DF86E /* sound in Resources */ = {isa = PBXBuildFile; fileRef = FA261743189E1F48000DF86E /* sound */; };
 		FA3EBE441894DC6600911046 /* resources-large in Resources */ = {isa = PBXBuildFile; fileRef = FA3EBE411894DC6600911046 /* resources-large */; };
 		FA3EBE451894DC6600911046 /* resources-small in Resources */ = {isa = PBXBuildFile; fileRef = FA3EBE421894DC6600911046 /* resources-small */; };
@@ -754,6 +755,9 @@
 		D4EF949D15BD2D9600D803EB /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../proj.ios/Icon-72.png"; sourceTree = "<group>"; };
 		D4EF949F15BD2D9800D803EB /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-144.png"; path = "../proj.ios/Icon-144.png"; sourceTree = "<group>"; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		FA168291189E280100BE614E /* GameResult.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameResult.cpp; path = ../Classes/GameResult.cpp; sourceTree = "<group>"; };
+		FA168292189E280100BE614E /* GameResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameResult.h; path = ../Classes/GameResult.h; sourceTree = "<group>"; };
+		FA168293189E280100BE614E /* GameResultLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameResultLoader.h; path = ../Classes/GameResultLoader.h; sourceTree = "<group>"; };
 		FA261743189E1F48000DF86E /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sound; sourceTree = "<group>"; };
 		FA3EBE411894DC6600911046 /* resources-large */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-large"; sourceTree = "<group>"; };
 		FA3EBE421894DC6600911046 /* resources-small */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-small"; sourceTree = "<group>"; };
@@ -1296,6 +1300,9 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FA168291189E280100BE614E /* GameResult.cpp */,
+				FA168292189E280100BE614E /* GameResult.h */,
+				FA168293189E280100BE614E /* GameResultLoader.h */,
 				FA7BD6B5189E06C8004725F9 /* LogoScene.cpp */,
 				FA7BD6B6189E06C8004725F9 /* LogoScene.h */,
 				FA7BD6B7189E06C8004725F9 /* TitleLayer.cpp */,
@@ -2100,6 +2107,7 @@
 				FA7BD6BC189E06C8004725F9 /* LogoScene.cpp in Sources */,
 				FA7BD6BD189E06C8004725F9 /* TitleLayer.cpp in Sources */,
 				FA7BD6BE189E06C8004725F9 /* TitleScene.cpp in Sources */,
+				FA168294189E280100BE614E /* GameResult.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
