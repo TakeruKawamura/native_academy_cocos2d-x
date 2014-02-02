@@ -8,10 +8,13 @@
 
 #include "GameScene.h"
 #include "picojson.h"
+#include "SimpleAudioEngine.h"
 #include <fstream>
 
 // For Character
 #include "CharacterManager.h"
+
+using namespace CocosDenshion;
 
 GameScene::GameScene() {
     _characterManager = NULL;
@@ -45,6 +48,12 @@ bool GameScene::init() {
     parentNode2->setPosition(ccp(winSize.width * 0.5, winSize.height * 3));
 
     this->addChild(parentNode2);
+    
+    //include music
+    SimpleAudioEngine::sharedEngine()->setEffectsVolume(0.5);
+    SimpleAudioEngine::sharedEngine()->preloadEffect(dieSound);
+    SimpleAudioEngine::sharedEngine()->preloadEffect(jumpSound);
+    
     
     // =====================================================================
     // For Character
