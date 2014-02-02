@@ -23,6 +23,8 @@ CharacterBase::CharacterBase() {
     _screenWidthStart = 0.0f;
     _screenWidthEnd   = 0.0f;
     _screenHeight     = 0.0f;
+    _floorOffsetX     = 0.0f;
+    _floorOffsetY     = 0.0f;
     _directionLeft    = false;
     _turnFloor        = false;
     _ground           = false;
@@ -203,9 +205,9 @@ bool CharacterBase::calcFloor(float& leftX, float& rightX, float& y) {
     if (_floor != NULL) {
         CCRect bound = _floor->boundingBox();
         
-        leftX  = bound.origin.x;
-        rightX = bound.origin.x + bound.size.width;
-        y      = bound.origin.y + bound.size.height;
+        leftX  = bound.origin.x + _floorOffsetX;
+        rightX = bound.origin.x + bound.size.width + _floorOffsetX;
+        y      = bound.origin.y + bound.size.height + _floorOffsetY;
         
         ret = true;
     }

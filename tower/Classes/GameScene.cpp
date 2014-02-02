@@ -223,7 +223,7 @@ bool GameScene::initCharacter(const float backgroundOffsetPixcel) {
     
     //_characterManager->createCCSpriteBatchNode(TEST_CHARA_PNG);
     
-    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     
     CharacterBase* enemy0 = new CharacterBase();
     
@@ -244,7 +244,7 @@ bool GameScene::initCharacter(const float backgroundOffsetPixcel) {
      enemy0->createCCSprite(tex, enemyR, enemyL, backgroundOffsetPixcel);
      */
     enemy0->createCCSprite(ENEMY_0_R_PNG, ENEMY_0_L_PNG, true, true, backgroundOffsetPixcel);
-    enemy0->setPosition(visibleSize.width * 0.9f, visibleSize.height * 1.5f);
+    enemy0->setPosition(winSize.width * 0.9f, winSize.height * 1.5f);
     
     _characterManager->addCharacter(enemy0);
     
@@ -253,7 +253,7 @@ bool GameScene::initCharacter(const float backgroundOffsetPixcel) {
     if (enemy1 == NULL) return false;
     
     enemy1->createCCSprite(ENEMY_1_R_PNG, ENEMY_1_L_PNG, true, false, backgroundOffsetPixcel);
-    enemy1->setPosition(visibleSize.width * 0.1f, visibleSize.height * 2.0f);
+    enemy1->setPosition(winSize.width * 0.1f, winSize.height * 2.0f);
     
     _characterManager->addCharacter(enemy1);
     
@@ -262,13 +262,15 @@ bool GameScene::initCharacter(const float backgroundOffsetPixcel) {
     if (player == NULL) return false;
     
     player->createCCSprite(PLAYER_R_PNG, PLAYER_L_PNG, true, false, backgroundOffsetPixcel);
-    player->setPosition(visibleSize.width * 0.5f, 0.0f);
+    player->setPosition(winSize.width * 0.5f, 0.0f);
     player->setTurnFloor(true); // これがプレイヤーになる指定の仕様
     
     _characterManager->addCharacter(player);
     
     //this->addChild(spr);
     _characterManager->setSprite(this);
+    
+    _characterManager->setOffset(winSize.width * 0.5f, winSize.height);
     
     return true;
 }

@@ -134,6 +134,7 @@ void CharacterManager::update(const float delta) {
                         
                         checkCollisionFoor(cb, &onFloor);
                         cb->setOnFloor(onFloor); // NULLセットが床上にない判定
+                        cb->setFloorOffset(_widthOffset, _heightOffset);
                     }
                 }
             }

@@ -33,6 +33,7 @@ public:
     void setTurnFloor(const bool turn) { _turnFloor = turn; }
     void setJump() { _setJump = true; }
     void setPosition(const float x, const float y) { _x = x; _x0 = x; _y = y; _y0 = y; } // 落下初期位置にもセット
+    void setFloorOffset(const float x, const float y) { _floorOffsetX = x; _floorOffsetY = y; }
     void setOnFloor(CCSprite* ccSprite) { _floor = ccSprite; _rise = false; _jump = false; }
     bool isTurnFloor() { return _turnFloor; }
     bool isFloor() { return (_floor == NULL) ? false : true; }
@@ -72,6 +73,8 @@ private:
     float               _screenWidthStart;
     float               _screenWidthEnd;
     float               _screenHeight;
+    float               _floorOffsetX;
+    float               _floorOffsetY;
     bool                _directionLeft;
     bool                _turnFloor;         // 床の上で向きを変えるか(プレイヤーかどうか)
     bool                _ground;            // プレイヤーの地面処理
