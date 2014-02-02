@@ -46,32 +46,15 @@ bool GameScene::init() {
 
     this->addChild(parentNode2);
     
-    //set background
-    bg1 = CCSprite::create(backGroundImgName);
-    bg1->setPosition(CCPointZero);
-    parentNode1->addChild(bg1);
-    
-    //set second background
-    bg2 = CCSprite::create(backGroundImgName);
-    bg2->setPosition(CCPointZero);
-    parentNode2->addChild(bg2);
-    
-    CCLOG("1 anchor point x %f", bg1->getAnchorPoint().x);
-    CCLOG("1 anchor point y %f", bg1->getAnchorPoint().y);
-    //初期の板の位置を指定
-    this->initMap();
-    
-    //test data
-    testGameTime = 0;
-    
-    this->schedule(schedule_selector(GameScene::testScheduleMethod));
-    
     // =====================================================================
     // For Character
     // 背景画像の両端の無効領域を算出
-    const float backgroundOffsetPixcel = bg1->getTexture()->getPixelsWide() * 29.0f / 384.0f;
+    const float backgroundOffsetPixcel = winSize.width * 29.0f / 384.0f;
     
     initCharacter(backgroundOffsetPixcel);
+    
+    //初期の板の位置を指定
+    this->initMap();
     
     // タッチを有効にする
     this->setTouchEnabled(true);
@@ -203,20 +186,20 @@ void GameScene::generateMap(CCNode* parentNode) {
     float prevY = parentCS.height * -0.5;
     srand(time(NULL));
     
-    while (prevY < parentCS.height) {
+    while (prevY < parentCS.height * 0.5) {
         CCSprite* board = CCSprite::create(boardImgName);
         float mPx = 15.0f;
         float mPy = 7.0f;
         
         std::map<std::string,int> location = this->mapList.at(rand() % this->mapList.size());
         prevY += (float)location.at("y") * mPy;
-        if (prevY > parentCS.height) {
+        if (prevY > parentCS.height * 0.5) {
             break;
         }
         float xPos = (float) location.at("x") * mPx;
         board->setPosition(ccp(parentCS.width * parentAP.x + xPos, parentCS.height * parentAP.y + prevY));
         parentNode->addChild(board);
-        
+        _characterManager->addFloor(board);
     }
     parentNode->setVisible(true);
 }
