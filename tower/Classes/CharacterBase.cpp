@@ -9,6 +9,9 @@
 #include "CharacterManager.h"
 #include "CharacterBase.h"
 #include "math.h"
+#include "SimpleAudioEngine.h"
+
+using namespace CocosDenshion;
 
 CharacterBase::CharacterBase() {
     _manager          = NULL;
@@ -107,6 +110,12 @@ void CharacterBase::createCCSprite(const char* fileNameR, const char* fileNameL,
         _screenWidthEnd   = winSize.width - backgroundOffsetPixcel;
         
         _screenHeight = winSize.height;
+        
+        //include music
+        SimpleAudioEngine::sharedEngine()->setEffectsVolume(0.5);
+        SimpleAudioEngine::sharedEngine()->preloadEffect(dieSound);
+        SimpleAudioEngine::sharedEngine()->preloadEffect(jumpSound);
+        
     }
 }
 
@@ -415,3 +424,7 @@ void CharacterBase::doJump() {
     }
 }
 
+void CharacterBase::setJump() {
+    SimpleAudioEngine::sharedEngine()->playEffect(jumpSound);
+     _setJump = true;
+}

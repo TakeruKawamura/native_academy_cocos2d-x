@@ -42,8 +42,7 @@ private:
     std::vector<std::map<std::string,int> > mapList;
     const char* boardImgName = "board.png";
     const char* backGroundImgName = "bg.png";
-    const char* jumpSound = "sound/jump.mp3";
-    const char* dieSound = "sound/die.mp3";
+    
     CCNode* parentNode1;
     CCNode* parentNode2;
     CCSprite* bg1;

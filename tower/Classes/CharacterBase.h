@@ -34,7 +34,7 @@ public:
     void setManager(CharacterManager* manager) { _manager = manager; }
     void setVisible(const bool visible);
     void setTurnFloor(const bool turn) { _turnFloor = turn; }
-    void setJump() { _setJump = true; }
+    void setJump();
     void setPosition(const float x, const float y) { _x = x; _x0 = x; _y = y; _y0 = y; } // 落下初期位置にもセット
     void setFloorOffset(const float x, const float y) { _floorOffsetX = x; _floorOffsetY = y; }
     void addFloorOffsetY(const float y) { _floorOffsetAddY += y; }
@@ -57,6 +57,8 @@ private:
     const float GRAVITY_COEFFI   = -9.8f;
     const float REVERSE_OFFSET   = 2.0f;
     const float ADJUST_FACTOR_FOR_PHYSIC = 0.005f;
+    const char* jumpSound = "sound/jump.mp3";
+    const char* dieSound = "sound/die.mp3";
     
     void setDirectionLeft(const bool left);
     bool calcFloor(float& leftX, float& rightX, float& y);
