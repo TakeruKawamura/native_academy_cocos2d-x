@@ -1,8 +1,7 @@
 //
 //  CharacerBase.h
-//  group_a
 //
-//  Created by cocos2d-x on 14/01/26.
+//  Created by Michihito Manaka on 14/01/26.
 //
 //
 #ifndef CHARACTER_BASE_H

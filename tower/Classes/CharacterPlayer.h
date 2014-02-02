@@ -1,8 +1,7 @@
 //
 //  CharacterPlayer.h
-//  tower
 //
-//  Created by cocos2d-x on 14/01/26.
+//  Created by Michihito Manakax on 14/01/26.
 //
 //
 #ifndef CHARACTER_PLAYER_H

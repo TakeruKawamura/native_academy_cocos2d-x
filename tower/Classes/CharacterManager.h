@@ -1,8 +1,7 @@
 //
 //  CharacterManager.h
-//  group_a
 //
-//  Created by cocos2d-x on 14/01/26.
+//  Created by Michihito Manaka on 14/01/26.
 //
 //
 #ifndef CHARACTER_MANAGER_H
@@ -25,6 +24,7 @@ public:
     void update(const float delta);
     void setVisible(const bool visible);
     void setJump();
+    void setOffset(const float offsetX, const float offsetY) { _widthOffset = offsetX; _heightOffset = offsetY; }
     
     //CCSpriteBatchNode* getCCSpriteBatchNode() { return _ccSpriteBatchNode; }
     void setSprite(CCLayer* ccLayer);
@@ -37,6 +37,8 @@ private:
     std::vector<CharacterBase*> _character;
     std::vector<CCSprite*>      _floor;
     float                       _screenHeight;
+    float                       _widthOffset; // 背景座標のオフセット用
+    float                       _heightOffset;
 };
 
 

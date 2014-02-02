@@ -1,8 +1,7 @@
 //
 //  CharacterManager.cpp
-//  group_a
 //
-//  Created by cocos2d-x on 14/01/26.
+//  Created by Michihito Manaka on 14/01/26.
 //
 //
 
@@ -11,6 +10,8 @@
 CharacterManager::CharacterManager() {
     //_ccSpriteBatchNode = NULL;
     _screenHeight = 0.0f;
+    _widthOffset  = 0.0f;
+    _heightOffset = 0.0f;
 }
 
 
@@ -179,8 +180,8 @@ bool CharacterManager::checkCollisionRect(CharacterBase* chara, CCSprite* floor)
     return floorRect.intersectsRect(charaRect);
 #else
     // 幅チェック
-    const float floorXL    = floorRect.origin.x;
-    const float floorXR    = floorRect.origin.x + floorRect.size.width;
+    const float floorXL    = floorRect.origin.x + _widthOffset;
+    const float floorXR    = floorRect.origin.x + floorRect.size.width + _widthOffset;
 
     const float charaXL    = charaRect.origin.x;
     const float charaXR    = charaRect.origin.x + charaRect.size.width;
@@ -189,7 +190,7 @@ bool CharacterManager::checkCollisionRect(CharacterBase* chara, CCSprite* floor)
     if (charaXL > floorXR || charaXR < floorXL) return false;
     
     // 高さチェック(落下している前提なので、キャラクターの前回のY値も使う)
-    const float floorY    = floorRect.origin.y + floorRect.size.height;
+    const float floorY    = floorRect.origin.y + floorRect.size.height + _heightOffset;
     const float charaOldY = chara->getOldY();
     const float charaY    = charaRect.origin.y;
     

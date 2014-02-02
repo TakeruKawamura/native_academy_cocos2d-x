@@ -1,8 +1,7 @@
 //
 //  CharacerBase.cpp
-//  group_a
 //
-//  Created by cocos2d-x on 14/01/26.
+//  Created by Michihito Manaka on 14/01/26.
 //
 //
 
@@ -336,12 +335,12 @@ void CharacterBase::updateFalling(const float delta) {
     // 画面端処理
     if (_x <= _screenWidthStart) {
         setDirectionLeft(false);
-        _x0 = _screenWidthStart - _x0;
+        _x0 = _screenWidthStart - _x0 + REVERSE_OFFSET;
         _vx = -_vx;
     }
     else if (_x >= _screenWidthEnd) {
         setDirectionLeft(true);
-        _x0 = _screenWidthEnd + (_screenWidthEnd - _x0);
+        _x0 = _screenWidthEnd + (_screenWidthEnd - _x0 - REVERSE_OFFSET);
         _vx = -_vx;
     }
 }
