@@ -252,6 +252,8 @@ void CharacterBase::checkGround() {
 }
 
 void CharacterBase::setResultScene() {
+    SimpleAudioEngine::sharedEngine()->playEffect(dieSound);
+    
     CCScene* result = GameResult::scene();
     CCTransitionFade* tran = CCTransitionFade::create(2.0f, result, ccc3(0, 0, 0));
     CCDirector::sharedDirector()->replaceScene(tran);
