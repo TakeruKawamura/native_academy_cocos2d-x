@@ -191,6 +191,9 @@ void CharacterBase::checkGround() {
         
         if (_y < -sprH) {
             _y = _screenHeight + sprH;
+            _y0 = _y;
+            
+            _fallDelta = 0.0f;
         }
     }
 }
