@@ -273,6 +273,8 @@ bool GameScene::initCharacter(const float backgroundOffsetPixcel) {
     player->createCCSprite(PLAYER_R_PNG, PLAYER_L_PNG, true, false, backgroundOffsetPixcel);
     player->setPosition(winSize.width * 0.5f, 0.0f);
     player->setTurnFloor(true); // これがプレイヤーになる指定の仕様
+    player->setGameScene(this);
+    player->setManager(_characterManager);
     
     _characterManager->addCharacter(player);
     

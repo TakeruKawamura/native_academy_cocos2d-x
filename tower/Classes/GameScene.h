@@ -25,6 +25,8 @@ public:
     CREATE_FUNC(GameScene);
     float testGameTime;
     
+    void moveMap(float amount);
+    
     // =====================================================================
     // For Character
     void startGame();
@@ -51,7 +53,6 @@ private:
     
     std::vector<std::map<std::string,int> > readMapFile();
     void initMap();
-    void moveMap(float amount);
     
     void testScheduleMethod(float fDelta);
     

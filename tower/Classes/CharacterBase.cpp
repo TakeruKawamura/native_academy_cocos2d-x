@@ -5,10 +5,14 @@
 //
 //
 
+#include "GameScene.h"
+#include "CharacterManager.h"
 #include "CharacterBase.h"
 #include "math.h"
 
 CharacterBase::CharacterBase() {
+    _manager          = NULL;
+    _scene            = NULL;
     _floor            = NULL;
     _ccSpriteL        = NULL;
     _ccSpriteR        = NULL;
@@ -25,10 +29,10 @@ CharacterBase::CharacterBase() {
     _screenHeight     = 0.0f;
     _floorOffsetX     = 0.0f;
     _floorOffsetY     = 0.0f;
+    _floorOffsetAddY  = 0.0f;
     _directionLeft    = false;
     _turnFloor        = false;
     _ground           = false;
-    _rise             = false;
     _jump             = false;
     _setJump          = false;
 }
@@ -97,12 +101,12 @@ void CharacterBase::createCCSprite(const char* fileNameR, const char* fileNameL,
         _vy = WIDTH_MOVEMENT * sinf(theta);
         
         // 途中画面サイズ変更は想定しない
-        CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+        CCSize winSize = CCDirector::sharedDirector()->getWinSize();
         
         _screenWidthStart = backgroundOffsetPixcel;
-        _screenWidthEnd   = visibleSize.width - backgroundOffsetPixcel;
+        _screenWidthEnd   = winSize.width - backgroundOffsetPixcel;
         
-        _screenHeight = visibleSize.height;
+        _screenHeight = winSize.height;
     }
 }
 
@@ -148,9 +152,6 @@ void CharacterBase::update(const float delta) {
         updateOnFloor(delta);
     }
     
-    // ジャンプ中処理
-    onJump();
-    
     // 画面下端処理
     checkGround();
     
@@ -159,14 +160,46 @@ void CharacterBase::update(const float delta) {
     
     _oldy = target->boundingBox().origin.y;
     target->setPosition(ccp(_x, _y));
+    
+    // ジャンプ中処理
+    onJump();
 }
 
 void CharacterBase::onJump() {
     if (_jump && _rise) {
-        float y = getCCSprite()->boundingBox().origin.y;
+        const float y = getCCSprite()->boundingBox().origin.y;
         
-        if (y <= _oldy) {
+        if (y < _oldy) {
             _rise = false;
+        }
+    }
+}
+
+void CharacterBase::setOnFloor(CCSprite* ccSprite) {
+    _floor = ccSprite;
+    _rise = false;
+    _jump = false;
+    
+    checkBackGroundOffsetY();
+}
+
+void CharacterBase::checkBackGroundOffsetY() {
+    const float y = getCCSprite()->boundingBox().origin.y;
+    
+    const float halfHeight = _screenHeight * 0.5f;
+    
+    // 画面をスクロールするか
+    if (y > halfHeight) {
+        float diff = y - halfHeight;
+        
+        if (_scene != NULL) {
+            _scene->moveMap(diff);
+            
+            addFloorOffsetY(-diff);
+            
+            if (_manager != NULL) {
+                _manager->addOffsetY(-diff);
+            }
         }
     }
 }
@@ -210,7 +243,7 @@ bool CharacterBase::calcFloor(float& leftX, float& rightX, float& y) {
         
         leftX  = bound.origin.x + _floorOffsetX;
         rightX = bound.origin.x + bound.size.width + _floorOffsetX;
-        y      = bound.origin.y + bound.size.height + _floorOffsetY;
+        y      = bound.origin.y + bound.size.height + _floorOffsetY + _floorOffsetAddY;
         
         ret = true;
     }

@@ -11,6 +11,7 @@
 
 USING_NS_CC;
 
+class GameScene;
 class CharacterManager;
 
 class CharacterBase {
@@ -29,12 +30,16 @@ public:
     CCSprite* getCCSpriteR() { return _ccSpriteR; }
     float getY() { return _y; }
     float getOldY() { return _oldy; }
+    void setGameScene(GameScene* scene) {_scene = scene; }
+    void setManager(CharacterManager* manager) { _manager = manager; }
     void setVisible(const bool visible);
     void setTurnFloor(const bool turn) { _turnFloor = turn; }
     void setJump() { _setJump = true; }
     void setPosition(const float x, const float y) { _x = x; _x0 = x; _y = y; _y0 = y; } // 落下初期位置にもセット
     void setFloorOffset(const float x, const float y) { _floorOffsetX = x; _floorOffsetY = y; }
-    void setOnFloor(CCSprite* ccSprite) { _floor = ccSprite; _rise = false; _jump = false; }
+    void addFloorOffsetY(const float y) { _floorOffsetAddY += y; }
+    void resetAddFloorOffsetY() { _floorOffsetAddY = 0.0f; }
+    void setOnFloor(CCSprite* ccSprite);
     bool isTurnFloor() { return _turnFloor; }
     bool isFloor() { return (_floor == NULL) ? false : true; }
     bool isRise() { return _rise ? true : false; }
@@ -58,7 +63,10 @@ private:
     void doJump();
     void onJump();
     void checkGround();
+    void checkBackGroundOffsetY();
     
+    GameScene*          _scene;             // 参照のみ
+    CharacterManager*   _manager;           // 参照のみ
     CCSprite*           _floor;             // 参照のみ
     CCSprite*           _ccSpriteL;
     CCSprite*           _ccSpriteR;
@@ -75,6 +83,7 @@ private:
     float               _screenHeight;
     float               _floorOffsetX;
     float               _floorOffsetY;
+    float               _floorOffsetAddY;
     bool                _directionLeft;
     bool                _turnFloor;         // 床の上で向きを変えるか(プレイヤーかどうか)
     bool                _ground;            // プレイヤーの地面処理

@@ -25,6 +25,8 @@ public:
     void setVisible(const bool visible);
     void setJump();
     void setOffset(const float offsetX, const float offsetY) { _widthOffset = offsetX; _heightOffset = offsetY; }
+    void addOffsetY(const float y) { _addOffsetHeight += y; }
+    void resetAddOffsetY();
     
     //CCSpriteBatchNode* getCCSpriteBatchNode() { return _ccSpriteBatchNode; }
     void setSprite(CCLayer* ccLayer);
@@ -39,6 +41,7 @@ private:
     float                       _screenHeight;
     float                       _widthOffset; // 背景座標のオフセット用
     float                       _heightOffset;
+    float                       _addOffsetHeight;
 };
 
 

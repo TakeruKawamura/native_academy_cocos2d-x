@@ -9,9 +9,10 @@
 
 CharacterManager::CharacterManager() {
     //_ccSpriteBatchNode = NULL;
-    _screenHeight = 0.0f;
-    _widthOffset  = 0.0f;
-    _heightOffset = 0.0f;
+    _screenHeight    = 0.0f;
+    _widthOffset     = 0.0f;
+    _heightOffset    = 0.0f;
+    _addOffsetHeight = 0.0f;
 }
 
 
@@ -132,9 +133,11 @@ void CharacterManager::update(const float delta) {
                     if (y >= 0.0f && y <= _screenHeight) {
                         CCSprite* onFloor = NULL;
                         
-                        checkCollisionFoor(cb, &onFloor);
-                        cb->setOnFloor(onFloor); // NULLセットが床上にない判定
-                        cb->setFloorOffset(_widthOffset, _heightOffset);
+                        if (!cb->isFloor()) {
+                            checkCollisionFoor(cb, &onFloor);
+                            cb->setOnFloor(onFloor); // NULLセットが床上にない判定
+                            cb->setFloorOffset(_widthOffset, _heightOffset);
+                        }
                     }
                 }
             }
@@ -191,7 +194,7 @@ bool CharacterManager::checkCollisionRect(CharacterBase* chara, CCSprite* floor)
     if (charaXL > floorXR || charaXR < floorXL) return false;
     
     // 高さチェック(落下している前提なので、キャラクターの前回のY値も使う)
-    const float floorY    = floorRect.origin.y + floorRect.size.height + _heightOffset;
+    const float floorY    = floorRect.origin.y + floorRect.size.height + _heightOffset + _addOffsetHeight;
     const float charaOldY = chara->getOldY();
     const float charaY    = charaRect.origin.y;
     
@@ -202,6 +205,24 @@ bool CharacterManager::checkCollisionRect(CharacterBase* chara, CCSprite* floor)
     
     return false;
 #endif
+}
+
+void CharacterManager::resetAddOffsetY() {
+    _addOffsetHeight = 0.0f;
+    
+    const int size = _character.size();
+    
+    if (size > 0) {
+        for (int i=0; i<size; ++i) {
+            CharacterBase* cb = _character[i];
+            
+            if (cb != NULL) {
+                if (cb->isTurnFloor()) {
+                    cb->resetAddFloorOffsetY();
+                }
+            }
+        }
+    }
 }
 
 void CharacterManager::setVisible(const bool visible) {
