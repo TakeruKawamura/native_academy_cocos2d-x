@@ -247,7 +247,6 @@
 		D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949D15BD2D9600D803EB /* Icon-72.png */; };
 		D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF949F15BD2D9800D803EB /* Icon-144.png */; };
 		FA168294189E280100BE614E /* GameResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA168291189E280100BE614E /* GameResult.cpp */; };
-		FA261744189E1F48000DF86E /* sound in Resources */ = {isa = PBXBuildFile; fileRef = FA261743189E1F48000DF86E /* sound */; };
 		FA3EBE441894DC6600911046 /* resources-large in Resources */ = {isa = PBXBuildFile; fileRef = FA3EBE411894DC6600911046 /* resources-large */; };
 		FA3EBE451894DC6600911046 /* resources-small in Resources */ = {isa = PBXBuildFile; fileRef = FA3EBE421894DC6600911046 /* resources-small */; };
 		FA3EBE461894DC6600911046 /* resources-xlarge in Resources */ = {isa = PBXBuildFile; fileRef = FA3EBE431894DC6600911046 /* resources-xlarge */; };
@@ -758,7 +757,6 @@
 		FA168291189E280100BE614E /* GameResult.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameResult.cpp; path = ../Classes/GameResult.cpp; sourceTree = "<group>"; };
 		FA168292189E280100BE614E /* GameResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameResult.h; path = ../Classes/GameResult.h; sourceTree = "<group>"; };
 		FA168293189E280100BE614E /* GameResultLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameResultLoader.h; path = ../Classes/GameResultLoader.h; sourceTree = "<group>"; };
-		FA261743189E1F48000DF86E /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sound; sourceTree = "<group>"; };
 		FA3EBE411894DC6600911046 /* resources-large */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-large"; sourceTree = "<group>"; };
 		FA3EBE421894DC6600911046 /* resources-small */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-small"; sourceTree = "<group>"; };
 		FA3EBE431894DC6600911046 /* resources-xlarge */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-xlarge"; sourceTree = "<group>"; };
@@ -1766,7 +1764,6 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FA261743189E1F48000DF86E /* sound */,
 				FA7BD6C2189E0A62004725F9 /* sound */,
 				FA7BD6C0189E09CF004725F9 /* TitleLayer.ccbi */,
 				FA3EBE411894DC6600911046 /* resources-large */,
@@ -1878,7 +1875,6 @@
 				FA3EBE4C1894EE3100911046 /* boardMap.json in Resources */,
 				FA7BD6C1189E09CF004725F9 /* TitleLayer.ccbi in Resources */,
 				FA7BD6C3189E0A62004725F9 /* sound in Resources */,
-				FA261744189E1F48000DF86E /* sound in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
