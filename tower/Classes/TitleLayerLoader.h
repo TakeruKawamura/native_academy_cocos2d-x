@@ -1,3 +1,7 @@
+/*
+ * 担当者：北島 領人
+ */
+
 #ifndef __tower__TitleLayerLoader__
 #define __tower__TitleLayerLoader__
 

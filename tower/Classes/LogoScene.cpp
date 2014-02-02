@@ -1,3 +1,7 @@
+/*
+ * 担当者：北島 領人
+*/
+
 #include "LogoScene.h"
 #include "TitleScene.h"
 

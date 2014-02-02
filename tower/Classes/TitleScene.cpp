@@ -1,9 +1,15 @@
+/*
+ * 担当者：北島 領人
+ */
+
 #include "TitleScene.h"
 #include "TitleLayerLoader.h"
 #include "cocos-ext.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace CocosDenshion;
 
 CCScene* TitleScene::scene()
 {
@@ -21,6 +27,11 @@ bool TitleScene::init()
         return false;
     }
     
+    // BGM、効果音のロード
+    SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.5);
+    SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic("sound/title_bgm.mp3");
+    SimpleAudioEngine::sharedEngine()->preloadEffect("sound/start.wav");
+    
     CCNode* node = NULL;
     
     CCNodeLoaderLibrary* ccNodeLoaderLibrary = CCNodeLoaderLibrary::sharedCCNodeLoaderLibrary();
@@ -30,6 +41,8 @@ bool TitleScene::init()
     node = ccbReader->readNodeGraphFromFile("TitleLayer.ccbi");
     node->setPosition(ccp(0, 0));
     this->addChild(node);
+    
+    SimpleAudioEngine::sharedEngine()->playBackgroundMusic("sound/title_bgm.mp3");
    
     return true;
 }

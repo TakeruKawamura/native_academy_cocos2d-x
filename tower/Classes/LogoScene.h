@@ -1,3 +1,7 @@
+/*
+ * 担当者：北島 領人
+ */
+
 #ifndef __group_a__LogoScene__
 #define __group_a__LogoScene__
 
